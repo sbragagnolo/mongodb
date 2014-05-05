@@ -1,0 +1,32 @@
+@(list: List[Excercise], exform: Form[Excercise])
+
+@import models.Excercise
+@import helper._
+
+@main("Excercises") {
+    
+    <h1>@list.size </h1>
+    
+    <ul>
+        @for(ex <- list) {
+            <li>
+                @ex.name
+                @ex.description
+                @form(routes.Application.deleteExcercise(ex.id)) {
+                    <input type="submit" value="erase">
+                }
+            </li>
+        }
+    </ul>
+    
+    <h2>Create a new object</h2>
+    
+    @form(routes.Application.newExcercise()) {
+        
+        @inputText(exform("name")) 
+        @inputText(exform("description"))
+        <input type="submit" value="Create">
+        
+    }
+    
+}
