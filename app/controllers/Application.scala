@@ -14,19 +14,19 @@ object Application extends Controller {
     mapping("name" -> text, "description" -> text)(Excercise.apply)(Excercise.unapply))
 
   def listExcercises = Action {
-    Ok(views.html.index.render( List[Excercise]() ++ ExcerciseObject.findAll, formExcercise));
+    Ok(views.html.index.render(List[Excercise]() ++ ExcerciseObject.findAll, formExcercise));
   }
   def deleteExcercise(id: String) = Action {
-    ExcerciseObject.delete(id)
+    ExcerciseObject.deleteById(id)
     Redirect(routes.Application.listExcercises)
   }
 
   def newExcercise() = Action { implicit request =>
 
     val data = formExcercise.bindFromRequest().fold(
-      formWithErrors => { 
-    	 Redirect(routes.Application.listExcercises) 
-      }, 
+      formWithErrors => {
+        Redirect(routes.Application.listExcercises)
+      },
       success => {
         ExcerciseObject.save(success)
         Redirect(routes.Application.listExcercises)
